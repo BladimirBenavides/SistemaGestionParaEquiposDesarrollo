@@ -49,10 +49,10 @@
                 @Html.DisplayFor(modelItem => item.Estado)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Usuario.Nombre)
+                @Html.DisplayFor(modelItem => item.UsuarioId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Proyecto.Nombre)
+                @Html.DisplayFor(modelItem => item.ProyectoId)
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

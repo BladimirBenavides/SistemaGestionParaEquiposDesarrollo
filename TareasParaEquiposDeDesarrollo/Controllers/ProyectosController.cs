@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Sistema.Consumer;
@@ -6,6 +7,7 @@ using SistemaEquiposDesarrollo.Modelos;
 
 namespace TareasParaEquiposDeDesarrollo.Controllers
 {
+    [Authorize]
     public class ProyectosController : Controller
     {
         // GET: ProyectosController
@@ -19,6 +21,7 @@ namespace TareasParaEquiposDeDesarrollo.Controllers
         public ActionResult Details(int id)
         {
             var proyecto = Crud<Proyecto>.GetById(id);
+            proyecto.Tareas = Crud<Tarea>.GetBy("",id);
             return View(proyecto);
         }
 

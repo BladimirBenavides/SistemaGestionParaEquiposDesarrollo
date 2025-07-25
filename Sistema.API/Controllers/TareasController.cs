@@ -28,10 +28,12 @@ namespace Sistema.API.Controllers
         }
 
         // GET api/<TareasController>/5
-        [HttpGet("{id}")]
+        [HttpGet("Proyecto/{id}")]
         public Tarea Get(int id)
         {
             var tarea = conexion.QuerySingle<Tarea>("SELECT * FROM tareas WHERE Id = @Id", new { Id = id });
+            var proyecto = conexion.QuerySingle<Proyecto>("SELECT * FROM proyectos WHERE Id = @Id", new { Id = tarea.ProyectoId });
+            tarea.Proyecto = proyecto;
             return tarea;
         }
 

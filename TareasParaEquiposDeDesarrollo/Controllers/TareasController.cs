@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Sistema.Consumer;
 using SistemaEquiposDesarrollo.Modelos;
 
 namespace TareasParaEquiposDeDesarrollo.Controllers
 {
+    [Authorize]
     public class TareasController : Controller
     {
         // GET: TareasController
@@ -17,14 +20,25 @@ namespace TareasParaEquiposDeDesarrollo.Controllers
         // GET: TareasController/Details/5
         public ActionResult Details(int id)
         {
-            var tareas = Crud<Tarea>.GetById(id);
-            return View(tareas);
+            var tarea = Crud<Tarea>.GetById(id);
+            return View(tarea);
         }
+
 
         // GET: TareasController/Create
         public ActionResult Create()
         {
             return View();
+        }
+
+        private List<SelectListItem> GetProyectos()
+        {
+            var proyectos = Crud<Proyecto>.GetAll();
+            return proyectos.Select(u => new SelectListItem
+            {
+                Value = u.Id.ToString(),
+                Text = u.Nombre
+            }).ToList();
         }
 
         // POST: TareasController/Create
@@ -90,6 +104,16 @@ namespace TareasParaEquiposDeDesarrollo.Controllers
                 ModelState.AddModelError("", ex.Message);
                 return View(tarea);
             }
+        }
+
+        public ActionResult Reportes(string estado)
+        {
+            var tareas = Crud<Tarea>.GetAll();
+
+            tareas = tareas.Where(t => estado == null || t.Estado == estado).ToList();
+            var proyectos = Crud<Proyecto>.GetAll();
+
+            return View(tareas);
         }
     }
 }

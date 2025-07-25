@@ -1,0 +1,40 @@
+﻿@model List<SistemaEquiposDesarrollo.Modelos.Tarea>
+
+<h1>Reportes de Tareas</h1>
+
+<form method="get">
+    <label for="estado">Estado:</label>
+    <select name="estado">
+        <option value="">Seleccionar Estado</option>
+        <option value="Pendiente">Pendiente</option>
+        <option value="En Progreso">En Progreso</option>
+        <option value="Completada">Completada</option>
+    </select>
+
+    <button type="submit">Filtrar</button>
+</form>
+
+<h2>Tareas Encontradas</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tarea in Model)
+        {
+            <tr>
+				<td>@tarea.Id</td>
+                <td>@tarea.Nombre</td>
+                <td>@tarea.Descripcion</td>
+                <td>@tarea.Estado</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
